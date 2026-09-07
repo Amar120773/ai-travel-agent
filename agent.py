@@ -9,15 +9,24 @@ from logger import logger
 
 load_dotenv()
 
-# Initialize OpenAI client (configured for Groq)
-api_key = os.environ.get("GROQ_API_KEY")
-if not api_key:
-    logger.warning("GROQ_API_KEY is missing from environment variables. Agent calls will fail.")
+def get_openai_client():
+    api_key = os.environ.get("GROQ_API_KEY")
+    
+    # Check Streamlit secrets if environment variable is missing
+    if not api_key:
+        try:
+            import streamlit as st
+            api_key = st.secrets.get("GROQ_API_KEY")
+        except Exception:
+            pass
+            
+    # Use a dummy key if none is found so the app still boots up (it will error gracefully when chatting)
+    return OpenAI(
+        api_key=api_key or "missing_api_key",
+        base_url="https://api.groq.com/openai/v1"
+    )
 
-client = OpenAI(
-    api_key=api_key,
-    base_url="https://api.groq.com/openai/v1"
-)
+client = get_openai_client()
 
 # You can use any Groq model here
 MODEL_NAME = "llama3-70b-8192"
@@ -137,7 +146,7 @@ def run_agent_loop(messages, user_id="default_user"):
             )
         except Exception as e:
             logger.exception(f"LLM API Call failed: {e}")
-            return "I'm sorry, I'm having trouble connecting to my brain (API Error). Please check the logs."
+            return f"**API Error Details:**\n```\n{str(e)}\n```\n\nPlease copy this error and share it so I can fix it!"
             
         response_message = response.choices[0].message
         current_messages.append(response_message)
