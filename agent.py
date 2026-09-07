@@ -9,27 +9,28 @@ from logger import logger
 
 load_dotenv()
 
+# Initialize OpenAI client (configured for Google Gemini)
 def get_openai_client():
-    api_key = os.environ.get("GROQ_API_KEY")
+    api_key = os.environ.get("GEMINI_API_KEY")
     
     # Check Streamlit secrets if environment variable is missing
     if not api_key:
         try:
             import streamlit as st
-            api_key = st.secrets.get("GROQ_API_KEY")
+            api_key = st.secrets.get("GEMINI_API_KEY")
         except Exception:
             pass
             
     # Use a dummy key if none is found so the app still boots up (it will error gracefully when chatting)
     return OpenAI(
         api_key=api_key or "missing_api_key",
-        base_url="https://api.groq.com/openai/v1"
+        base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
     )
 
 client = get_openai_client()
 
-# You can use any Groq model here
-MODEL_NAME = "llama-3.1-8b-instant"
+# Use Google's incredibly fast and stable Gemini 1.5 Flash model
+MODEL_NAME = "gemini-1.5-flash"
 
 def get_available_tools():
     """Define the JSON schema for tools the LLM can call."""
