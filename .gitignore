@@ -1,0 +1,12 @@
+# Environments
+.env
+venv/
+env/
+
+# Cache
+__pycache__/
+*.pyc
+
+# Database
+memory.db
+*.sqlite3
