@@ -29,7 +29,7 @@ def get_openai_client():
 client = get_openai_client()
 
 # You can use any Groq model here
-MODEL_NAME = "llama-3.1-70b-versatile"
+MODEL_NAME = "llama-3.3-70b-versatile"
 
 def get_available_tools():
     """Define the JSON schema for tools the LLM can call."""
