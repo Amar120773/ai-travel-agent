@@ -14,29 +14,31 @@ st.markdown("""
 <style>
     /* General app background */
     .stApp {
-        background-color: #0b0f19;
-        font-family: 'Inter', sans-serif;
+        background-color: #f8fafc;
+        font-family: 'Inter', -apple-system, sans-serif;
+        color: #0f172a;
     }
     
     /* Header Gradient and Animation */
     .premium-header {
-        background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+        background: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        font-size: 3.2em;
+        font-size: 3.0em;
         font-weight: 800;
         text-align: center;
         margin-bottom: 5px;
-        animation: fadeInDown 1s cubic-bezier(0.1, 0.8, 0.1, 1);
+        letter-spacing: -0.02em;
+        animation: fadeInDown 0.8s cubic-bezier(0.1, 0.8, 0.1, 1);
     }
     
     .premium-subheader {
         text-align: center;
-        color: #8a96a8;
+        color: #64748b;
         font-size: 1.1em;
         margin-bottom: 40px;
         font-weight: 400;
-        animation: fadeIn 1.5s ease-in-out;
+        animation: fadeIn 1.2s ease-in-out;
     }
     
     /* Hide Streamlit default branding */
@@ -46,7 +48,7 @@ st.markdown("""
     
     /* Animations */
     @keyframes fadeInDown {
-        0% { opacity: 0; transform: translateY(-30px); }
+        0% { opacity: 0; transform: translateY(-20px); }
         100% { opacity: 1; transform: translateY(0); }
     }
     
@@ -57,11 +59,15 @@ st.markdown("""
     
     /* Input box styling */
     .stChatInputContainer {
-        border-radius: 20px !important;
-        border: 1px solid rgba(79, 172, 254, 0.3) !important;
-        background-color: rgba(255, 255, 255, 0.03) !important;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3) !important;
-        backdrop-filter: blur(10px);
+        border-radius: 12px !important;
+        border: 1px solid #e2e8f0 !important;
+        background-color: #ffffff !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+        transition: all 0.2s ease-in-out;
+    }
+    .stChatInputContainer:focus-within {
+        border-color: #3b82f6 !important;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -101,4 +107,4 @@ if prompt := st.chat_input("E.g., I'm planning a trip to Japan next month..."):
                 # Save assistant response
                 st.session_state.messages.append({"role": "assistant", "content": response_content})
             except Exception as e:
-                st.error(f"System Error: {str(e)}\n\nPlease ensure your GROQ_API_KEY is set in the `.env` file.")
+                st.error(f"System Error: {str(e)}\n\nPlease ensure your GEMINI_API_KEY is set in the `.env` file.")
