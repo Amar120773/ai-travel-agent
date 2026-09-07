@@ -29,8 +29,8 @@ def get_openai_client():
 
 client = get_openai_client()
 
-# Use Google's incredibly fast and stable Gemini 1.5 Flash model
-MODEL_NAME = "gemini-1.5-flash"
+# Use Google's incredibly fast and stable Gemini 3.8 Flash model
+MODEL_NAME = "gemini-3.8-flash"
 
 def get_available_tools():
     """Define the JSON schema for tools the LLM can call."""
